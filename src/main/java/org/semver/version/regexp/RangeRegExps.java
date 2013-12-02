@@ -21,19 +21,20 @@ public class RangeRegExps {
 	protected static final String LONE_CARET = "(?:\\^)";
 
 	protected static final String TILDE_TRIM = "(?:\\s*~>?\\s*)";
-	protected static final String TILDE_RANGE = "^" + LONE_TILDE + VersionRegExps.MAIN_VERSION
-			+ VersionRegExps.PRERELEASE + "?";
+	protected static final String TILDE_RANGE = "^" + LONE_TILDE + "(" + VersionRegExps.MAIN_VERSION_NOCAP
+			+ VersionRegExps.PRERELEASE_NOCAP + "?)";
 
 	protected static final String CARET_TRIM = "";
 
-	protected static final String COMPARATOR = "^" + GTLT + "\\s*(" + VersionRegExps.FULL + ")$|^$";
+	protected static final String COMPARATOR = "^" + GTLT + "\\s*(" + VersionRegExps.FULL_NOCAP + ")$|^$";
 
-	protected static final String HYPHENRANGE = "^\\s*(" + XRANGE + ")\\s+-\\s+(" + XRANGE + ")\\s*$";
+	protected static final String HYPHEN_RANGE = "^\\s*(" + VersionRegExps.FULL_NOCAP + ")\\s+-\\s+("
+			+ VersionRegExps.FULL_NOCAP + ")\\s*$";
 
 	protected static final String STAR = "(<|>)?=?\\s*\\*";
 
 	protected static final String RANGE = "(?:" + XRANGE + ")|(?:" + VersionRegExps.FULL + ")|(?:" + COMPARATOR
-			+ ")|(?:" + TILDE_RANGE + ")";
+			+ ")|(?:" + TILDE_RANGE + ")|(?:" + HYPHEN_RANGE + ")";
 
 	protected static final String AND_RANGE = RANGE + "(?: " + RANGE + ")*";
 
@@ -49,6 +50,8 @@ public class RangeRegExps {
 	public static final Pattern SPECIFIC_REG = VersionRegExps.FULL_REG;
 
 	public static final Pattern COMPARATOR_REG = Pattern.compile(COMPARATOR);
+
+	public static final Pattern HYPHEN_RANGE_REG = Pattern.compile(HYPHEN_RANGE);
 
 	public static final Pattern TILDE_RANGE_REG = Pattern.compile("^" + LONE_TILDE + VersionRegExps.MAIN_VERSION
 			+ VersionRegExps.PRERELEASE + "?");

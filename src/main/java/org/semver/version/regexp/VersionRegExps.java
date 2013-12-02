@@ -22,11 +22,20 @@ public class VersionRegExps {
 
 	protected static final String MAIN_VERSION = "(" + NUMERIC_ID + ")\\.(" + NUMERIC_ID + ")\\.(" + NUMERIC_ID + ")";
 
+	protected static final String MAIN_VERSION_NOCAP = "(?:" + NUMERIC_ID + ")\\.(?:" + NUMERIC_ID + ")\\.(?:"
+			+ NUMERIC_ID + ")";
+
 	protected static final String PRERELEASE = ("(?:-(" + PRERELEASE_ID + "(?:\\." + PRERELEASE_ID + ")*))");
+
+	protected static final String PRERELEASE_NOCAP = ("(?:-(?:" + PRERELEASE_ID + "(?:\\." + PRERELEASE_ID + ")*))");
 
 	protected static final String BUILD = "(?:\\+(" + BUILD_ID + "(?:\\." + BUILD_ID + ")*))";
 
+	protected static final String BUILD_NOCAP = "(?:\\+(?:" + BUILD_ID + "(?:\\." + BUILD_ID + ")*))";
+
 	protected static final String FULL = EQ_PRE + MAIN_VERSION + PRERELEASE + "?" + BUILD + "?";
+
+	protected static final String FULL_NOCAP = EQ_PRE + MAIN_VERSION_NOCAP + PRERELEASE_NOCAP + "?" + BUILD_NOCAP + "?";
 
 	/**
 	 * Regexps for version analyzing

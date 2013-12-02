@@ -58,7 +58,23 @@ public class Ranges {
 		matcher = RangeRegExps.COMPARATOR_REG.matcher(range);
 		if (matcher.matches()) {
 			String comp = matcher.group(1), version = matcher.group(2);
-			System.out.println(matcher.group(0));
+
+			if (comp.equals(">")) {
+				return greaterThan(version);
+			} else if (comp.equals("<"))
+				return lessThan(version);
+			else if (comp.equals(">="))
+				return greaterAndEqualThan(version);
+			else if (comp.equals("<="))
+				return lessAndEqualThan(version);
+
+			throw new IllegalArgumentException("Unknown comparator: " + comp);
+		}
+
+		matcher = RangeRegExps.HYPHEN_RANGE_REG.matcher(range);
+		if (matcher.matches()) {
+			String min = matcher.group(1), max = matcher.group(2);
+			return new BaseRange(min, max, true, true);
 		}
 
 		return null;

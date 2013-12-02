@@ -15,43 +15,11 @@ public class BaseRange {
 	protected Version min;
 	protected Version max;
 
-	public static Version MIN = new Version() {
-		public boolean equals(Object o) {
-			return o == MIN;
-		}
+	public static Version MIN = new Version(Integer.MIN_VALUE,
+			Integer.MIN_VALUE, Integer.MIN_VALUE);
 
-		public int hashCode() {
-			return "MIN".hashCode();
-		}
-
-		public String toString() {
-			return "MIN";
-		}
-
-		public int compareTo(Version o) {
-			if (o == null)
-				return 1;
-			return -1;
-		};
-	};
-
-	public static Version MAX = new Version() {
-		public boolean equals(Object o) {
-			return o == MAX;
-		}
-
-		public int hashCode() {
-			return "MAX".hashCode();
-		}
-
-		public String toString() {
-			return "MAX";
-		}
-
-		public int compareTo(Version o) {
-			return 1;
-		};
-	};
+	public static Version MAX = new Version(Integer.MAX_VALUE,
+			Integer.MAX_VALUE, Integer.MAX_VALUE);
 
 	protected BaseRange() {
 		this(MAX, MIN);
@@ -61,11 +29,13 @@ public class BaseRange {
 		this(start, end, false, false);
 	}
 
-	protected BaseRange(String start, String end, boolean startClose, boolean endClose) {
+	protected BaseRange(String start, String end, boolean startClose,
+			boolean endClose) {
 		this(new Version(start), new Version(end), startClose, endClose);
 	}
 
-	protected BaseRange(Version start, Version end, boolean startClose, boolean endClose) {
+	protected BaseRange(Version start, Version end, boolean startClose,
+			boolean endClose) {
 		this.min = start;
 		this.max = end;
 		this.minClose = startClose;
@@ -79,8 +49,10 @@ public class BaseRange {
 		if (min.compareTo(max) > 0) // empty
 			return false;
 
-		return (minClose ? min.compareTo(version) <= 0 : min.compareTo(version) < 0)
-				&& (maxClose ? max.compareTo(version) >= 0 : max.compareTo(version) > 0);
+		return (minClose ? min.compareTo(version) <= 0
+				: min.compareTo(version) < 0)
+				&& (maxClose ? max.compareTo(version) >= 0 : max
+						.compareTo(version) > 0);
 	}
 
 	public boolean outside(Version version) {
@@ -100,7 +72,8 @@ public class BaseRange {
 		if (min.compareTo(max) > 0) // empty
 			return false;
 
-		return minClose ? min.compareTo(version) > 0 : min.compareTo(version) >= 0;
+		return minClose ? min.compareTo(version) > 0
+				: min.compareTo(version) >= 0;
 	}
 
 	public boolean less(Version version) {
@@ -110,7 +83,8 @@ public class BaseRange {
 		if (min.compareTo(max) > 0) // empty
 			return false;
 
-		return maxClose ? max.compareTo(version) < 0 : max.compareTo(version) <= 0;
+		return maxClose ? max.compareTo(version) < 0
+				: max.compareTo(version) <= 0;
 	}
 
 	public boolean satisfies(String version) {
