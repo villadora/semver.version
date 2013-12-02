@@ -1,17 +1,56 @@
 package org.semver.version;
 
+import java.util.Arrays;
+import java.util.regex.Matcher;
+
+import org.semver.version.regexp.VersionRegExps;
+
 public class Version implements Comparable<Version> {
 
 	private MainVersion mainVersion;
 
 	private PreRelease prerelease;
 
-	private String[] build;
+	private Build build;
+
+	private String version;
+
+	public static boolean valid(String version) {
+		if (version == null)
+			return false;
+
+		return VersionRegExps.FULL_REG.matcher(version).matches();
+	}
+
+	public Version() {
+		this.mainVersion = new MainVersion();
+		this.prerelease = new PreRelease();
+		this.build = new Build();
+	}
+
+	public Version(String version) {
+		if (!valid(version))
+			throw new IllegalArgumentException("version is invalid: " + version);
+
+		Matcher mc = VersionRegExps.FULL_REG.matcher(version);
+		if (mc.matches()) {
+			this.version = version;
+			this.mainVersion = new MainVersion(Integer.parseInt(mc.group(1)), Integer.parseInt(mc.group(2)),
+					Integer.parseInt(mc.group(3)));
+			this.prerelease = new PreRelease(mc.group(4));
+			this.build = new Build(mc.group(5));
+		} else
+			throw new IllegalArgumentException("version is invalid: " + version);
+	}
 
 	public Version(int major, int minor, int patch, String[] prerelease, String[] build) {
 		this.mainVersion = new MainVersion(major, minor, patch);
 		this.prerelease = new PreRelease(prerelease);
-		this.build = build;
+		this.build = new Build(build);
+	}
+
+	public Version(int major, int minor, int patch, String[] prerelease) {
+		this(major, minor, patch, prerelease, null);
 	}
 
 	public Version(int major, int minor, int patch) {
@@ -51,11 +90,52 @@ public class Version implements Comparable<Version> {
 	}
 
 	public String[] getBuild() {
-		return build;
+		return build.getBuild();
 	}
 
 	public void setBuild(String[] build) {
-		this.build = build;
+		this.build.setBuild(build);
+	}
+
+	@Override
+	public String toString() {
+		if (this.version != null)
+			return this.version;
+
+		StringBuilder vb = new StringBuilder(mainVersion.toString());
+		if (prerelease.getPrerelease().length > 0) {
+			vb.append("-");
+			vb.append(prerelease.toString());
+		}
+		if (build.getBuild().length > 0) {
+			vb.append("+");
+			vb.append(build.toString());
+		}
+
+		return vb.toString();
+	}
+
+	@Override
+	public boolean equals(Object that) {
+		if (this == that)
+			return true;
+
+		if (that instanceof Version) {
+			Version other = (Version) that;
+			return this.mainVersion.equals(other.mainVersion) && this.prerelease.equals(other.prerelease)
+					&& this.build.equals(other.build);
+		}
+
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		int result = 17;
+		for (int code : Arrays.asList(this.mainVersion.hashCode(), this.prerelease.hashCode(), this.build.hashCode())) {
+			result = 31 * result + code;
+		}
+		return result;
 	}
 
 	public int compareTo(Version o) {

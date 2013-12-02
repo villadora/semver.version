@@ -1,9 +1,39 @@
 package org.semver.version;
 
+import java.util.Arrays;
+import java.util.regex.Matcher;
+
+import org.semver.version.regexp.VersionRegExps;
+
 class MainVersion implements Comparable<MainVersion> {
 	private int major;
 	private int minor;
 	private int patch;
+
+	public static boolean valid(String mainVersion) {
+		if (mainVersion == null)
+			return false;
+
+		return VersionRegExps.MAIN_VERSION_REG.matcher(mainVersion).matches();
+	}
+
+	public MainVersion() {
+		this.major = this.minor = this.patch = 0;
+	}
+
+	public MainVersion(String mainVersion) {
+		if (!valid(mainVersion))
+			throw new IllegalArgumentException("mainVersion is invalid: " + mainVersion);
+
+		Matcher matcher = VersionRegExps.MAIN_VERSION_REG.matcher(mainVersion);
+		if (matcher.matches()) {
+			this.major = Integer.parseInt(matcher.group(1));
+			this.minor = Integer.parseInt(matcher.group(2));
+			this.patch = Integer.parseInt(matcher.group(3));
+		} else {
+			throw new IllegalArgumentException("mainVersion is invalid: " + mainVersion);
+		}
+	}
 
 	public MainVersion(int major, int minor, int patch) {
 		this.major = major;
@@ -33,6 +63,29 @@ class MainVersion implements Comparable<MainVersion> {
 
 	public void setPatch(int patch) {
 		this.patch = patch;
+	}
+
+	@Override
+	public String toString() {
+		return Integer.toString(major) + "." + Integer.toString(minor) + "." + Integer.toString(patch);
+	}
+
+	@Override
+	public boolean equals(final Object that) {
+		if (this == that) {
+			return true;
+		}
+		return that instanceof MainVersion ? this.compareTo((MainVersion) that) == 0 : false;
+	}
+
+	@Override
+	public int hashCode() {
+		int result = 17;
+		for (int num : Arrays.asList(this.major, this.minor, this.patch)) {
+			result = 31 * result + num;
+		}
+
+		return result;
 	}
 
 	public int compareTo(MainVersion o) {
