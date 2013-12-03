@@ -3,6 +3,8 @@ package org.semver.version.rexexp;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
+import java.util.regex.Matcher;
+
 import org.junit.Test;
 import org.junit.internal.runners.JUnit4ClassRunner;
 import org.junit.runner.RunWith;
@@ -18,5 +20,11 @@ public class RangeRegExpsTest {
 		assertThat(RangeRegExps.SIMPLE_RANGE_REG.matcher("1.3.0-pre").matches(), is(true));
 		assertThat(RangeRegExps.X_RANGE_REG.matcher("1.x.*").matches(), is(true));
 		assertThat(RangeRegExps.TILDE_RANGE_REG.matcher("~1.2").matches(), is(true));
+
+		Matcher mc = RangeRegExps.HYPHEN_RANGE_REG.matcher("1.3 - 1.4.4 || 1.x");
+		if (mc.find()) {
+			String hyphen = mc.group(0), start = mc.group(1), end = mc.group(2);
+			System.out.println(hyphen + " " + start + " " + end);
+		}
 	}
 }

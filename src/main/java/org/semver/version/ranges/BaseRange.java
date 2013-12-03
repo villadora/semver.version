@@ -23,6 +23,10 @@ public class BaseRange {
 		this(MAX, MIN);
 	}
 
+	protected BaseRange(String start, String end) {
+		this(new Version(start), new Version(end));
+	}
+
 	protected BaseRange(Version start, Version end) {
 		this(start, end, false, false);
 	}

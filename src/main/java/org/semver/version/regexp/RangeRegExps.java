@@ -16,7 +16,7 @@ public class RangeRegExps {
 
 	protected static final String TILDE = "(?:~>?)";
 
-	protected static final String SHORT_VERSION = "(?:" + NUMERIC_ID + "(?:\\." + NUMERIC_ID + ")*)";
+	protected static final String SHORT_VERSION = "(?:" + NUMERIC_ID + "(?:\\." + NUMERIC_ID + ")?)";
 
 	protected static final String EXACT_VERSION = "(?:" + MAIN_VERSION_NOCAP + "(?:" + PRERELEASE_NOCAP + ")?)";
 
@@ -30,20 +30,24 @@ public class RangeRegExps {
 
 	protected static final String HYPHEN_RANGE = "(?:" + IMPRECISE_VERSION + "\\s*-\\s*" + IMPRECISE_VERSION + ")";
 
-	protected static final String X_RANGE = "(?:(?:[v=]\\s*)?(?:(?:" + XRANGE_ID + ")|(?:" + XRANGE_ID + "\\."
-			+ XRANGE_ID + ")|(?:" + XRANGE_ID + "\\." + XRANGE_ID + "\\." + XRANGE_ID + ")))";
+	protected static final String X_RANGE = "(?:(?:[v=]\\s*)?((?:" + XRANGE_ID + ")|(?:" + NUMERIC_ID + "\\."
+			+ XRANGE_ID + ")|(?:" + NUMERIC_ID + "\\." + NUMERIC_ID + "\\." + XRANGE_ID + ")))";
 
 	/**
 	 * RegExp
 	 */
-	public static final Pattern SIMPLE_RANGE_REG = Pattern.compile("\\s*" + SIMPLE_RANGE + "\\s*");
+	public static final Pattern EXACT_VERSION_REG = Pattern.compile(EXACT_VERSION);
 
-	public static final Pattern COMPARE_RANGE_REG = Pattern.compile("\\s*" + COMPARE_RANGE + "\\s*");
+	public static final Pattern SHORT_VERSION_REG = Pattern.compile(SHORT_VERSION);
 
-	public static final Pattern HYPHEN_RANGE_REG = Pattern.compile("\\s*" + HYPHEN_RANGE + "\\s*");
+	public static final Pattern SIMPLE_RANGE_REG = Pattern.compile("^\\s*" + SIMPLE_RANGE + "\\s*");
 
-	public static final Pattern TILDE_RANGE_REG = Pattern.compile("\\s*" + TILDE_RANGE + "\\s*");
+	public static final Pattern COMPARE_RANGE_REG = Pattern.compile("^\\s*" + COMPARE_RANGE + "\\s*");
 
-	public static final Pattern X_RANGE_REG = Pattern.compile("\\s*" + X_RANGE + "\\s*");
+	public static final Pattern HYPHEN_RANGE_REG = Pattern.compile("^\\s*" + HYPHEN_RANGE + "\\s*");
+
+	public static final Pattern TILDE_RANGE_REG = Pattern.compile("^\\s*" + TILDE_RANGE + "\\s*");
+
+	public static final Pattern X_RANGE_REG = Pattern.compile("^\\s*" + X_RANGE + "\\s*");
 
 }

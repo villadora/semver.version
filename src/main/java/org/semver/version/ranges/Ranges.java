@@ -98,6 +98,14 @@ public class Ranges {
 		return new RangeParser(range.trim()).parse();
 	}
 
+	public static BaseRange exact(Version version) {
+		return new BaseRange(version, version, true, true);
+	}
+
+	public static BaseRange exact(String version) {
+		return exact(new Version(version));
+	}
+
 	public static BaseRange greaterThan(String version) {
 		return greaterThan(new Version(version));
 	}
@@ -130,4 +138,11 @@ public class Ranges {
 		return new BaseRange(BaseRange.MIN, version, false, true);
 	}
 
+	public static BaseRange between(String start, String end, boolean sClosed, boolean eClosed) {
+		return between(new Version(start), new Version(end), sClosed, eClosed);
+	}
+
+	public static BaseRange between(Version start, Version end, boolean sClosed, boolean eClosed) {
+		return new BaseRange(start, end, sClosed, eClosed);
+	}
 }
