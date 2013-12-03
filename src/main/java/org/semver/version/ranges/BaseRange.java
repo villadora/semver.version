@@ -15,11 +15,9 @@ public class BaseRange {
 	protected Version min;
 	protected Version max;
 
-	public static Version MIN = new Version(Integer.MIN_VALUE,
-			Integer.MIN_VALUE, Integer.MIN_VALUE);
+	public static Version MIN = new Version(-1, -1, -1, new String[] { "0" });
 
-	public static Version MAX = new Version(Integer.MAX_VALUE,
-			Integer.MAX_VALUE, Integer.MAX_VALUE);
+	public static Version MAX = new Version(Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE);
 
 	protected BaseRange() {
 		this(MAX, MIN);
@@ -29,13 +27,11 @@ public class BaseRange {
 		this(start, end, false, false);
 	}
 
-	protected BaseRange(String start, String end, boolean startClose,
-			boolean endClose) {
+	protected BaseRange(String start, String end, boolean startClose, boolean endClose) {
 		this(new Version(start), new Version(end), startClose, endClose);
 	}
 
-	protected BaseRange(Version start, Version end, boolean startClose,
-			boolean endClose) {
+	protected BaseRange(Version start, Version end, boolean startClose, boolean endClose) {
 		this.min = start;
 		this.max = end;
 		this.minClose = startClose;
@@ -49,10 +45,8 @@ public class BaseRange {
 		if (min.compareTo(max) > 0) // empty
 			return false;
 
-		return (minClose ? min.compareTo(version) <= 0
-				: min.compareTo(version) < 0)
-				&& (maxClose ? max.compareTo(version) >= 0 : max
-						.compareTo(version) > 0);
+		return (minClose ? min.compareTo(version) <= 0 : min.compareTo(version) < 0)
+				&& (maxClose ? max.compareTo(version) >= 0 : max.compareTo(version) > 0);
 	}
 
 	public boolean outside(Version version) {
@@ -72,8 +66,7 @@ public class BaseRange {
 		if (min.compareTo(max) > 0) // empty
 			return false;
 
-		return minClose ? min.compareTo(version) > 0
-				: min.compareTo(version) >= 0;
+		return minClose ? min.compareTo(version) > 0 : min.compareTo(version) >= 0;
 	}
 
 	public boolean less(Version version) {
@@ -83,8 +76,7 @@ public class BaseRange {
 		if (min.compareTo(max) > 0) // empty
 			return false;
 
-		return maxClose ? max.compareTo(version) < 0
-				: max.compareTo(version) <= 0;
+		return maxClose ? max.compareTo(version) < 0 : max.compareTo(version) <= 0;
 	}
 
 	public boolean satisfies(String version) {
@@ -124,5 +116,19 @@ public class BaseRange {
 
 	public boolean less(String version) {
 		return less(new Version(version));
+	}
+
+	@Override
+	public String toString() {
+		if (min == MIN && max == MAX)
+			return ">0.0.0 <0.0.0";
+
+		if (min == MIN) {
+			return maxClose ? "<=" : "<" + max.toString();
+		} else if (max == MAX) {
+			return minClose ? ">=" : ">" + min.toString();
+		}
+
+		return (maxClose ? "<=" : "<") + max.toString() + " " + (minClose ? ">=" : ">") + min.toString();
 	}
 }

@@ -8,11 +8,11 @@ public class VersionRegExps {
 	// RegExp Strings
 	// =========================
 
-	protected static final String EQ_PRE = "(?:\\s*[v=]\\s*)?";
+	protected static final String EQ_PRE = "(?:[v=]\\s*)?";
 
-	protected static final String NUMERIC_ID = "0|[1-9]\\d*";
+	protected static final String NUMERIC_ID = "(?:0|[1-9]\\d*)";
 
-	protected static final String NUMBERIC = "\\\\d+";
+	protected static final String NUMERIC = "\\\\d+";
 
 	protected static final String NON_NUMERIC_ID = "\\d*[a-zA-Z-][a-zA-Z0-9-]*";
 
@@ -35,8 +35,6 @@ public class VersionRegExps {
 
 	protected static final String FULL = EQ_PRE + MAIN_VERSION + PRERELEASE + "?" + BUILD + "?";
 
-	protected static final String FULL_NOCAP = EQ_PRE + MAIN_VERSION_NOCAP + PRERELEASE_NOCAP + "?" + BUILD_NOCAP + "?";
-
 	/**
 	 * Regexps for version analyzing
 	 */
@@ -48,6 +46,6 @@ public class VersionRegExps {
 
 	public static final Pattern BUILD_REG = Pattern.compile("(" + BUILD_ID + "(?:\\." + BUILD_ID + ")*)");
 
-	public static final Pattern FULL_REG = Pattern.compile("^" + EQ_PRE + MAIN_VERSION + PRERELEASE + "?" + BUILD
-			+ "?$");
+	public static final Pattern FULL_REG = Pattern.compile("^\\s*" + EQ_PRE + MAIN_VERSION + PRERELEASE + "?" + BUILD
+			+ "?\\s*$");
 }

@@ -5,12 +5,14 @@ import java.util.List;
 import java.util.regex.Matcher;
 
 import org.semver.version.Version;
+import org.semver.version.parser.RangeParser;
 import org.semver.version.regexp.RangeRegExps;
 
 public class Ranges {
 
 	public static boolean valid(String range) {
-		return RangeRegExps.VALID_RANGE_REG.matcher(range).matches();
+		// return RangeRegExps.VALID_RANGE_REG.matcher(range).matches();
+		return false;
 	}
 
 	public static BaseRange empty() {
@@ -38,7 +40,7 @@ public class Ranges {
 		if (!valid(range))
 			throw new IllegalArgumentException("Invalid range: " + range);
 
-		String[] rgs = RangeRegExps.OR_REG.split(range);
+		String[] rgs = null;// RangeRegExps.OR_REG.split(range);
 
 		if (rgs.length == 0)
 			return empty();
@@ -48,16 +50,32 @@ public class Ranges {
 		}
 
 		// single range string
-		rgs = RangeRegExps.AND_REG.split(rgs[0]);
+		// rgs = RangeRegExps.AND_REG.split(rgs[0]);
 
-		Matcher matcher = RangeRegExps.SPECIFIC_REG.matcher(range);
+		// Matcher mc = RangeRegExps.AND_RANGE_REG.matcher(rgs[0]);
+
+		Matcher matcher = RangeRegExps.SIMPLE_RANGE_REG.matcher(range);
 		if (matcher.matches()) {
 			return new SpecificRange(range);
 		}
 
-		matcher = RangeRegExps.COMPARATOR_REG.matcher(range);
+		matcher = RangeRegExps.COMPARE_RANGE_REG.matcher(range);
 		if (matcher.matches()) {
 			String comp = matcher.group(1), version = matcher.group(2);
+
+			if (version == null) {
+				matcher = RangeRegExps.SIMPLE_RANGE_REG.matcher(matcher.group(3));
+				if (matcher.matches()) {
+					// expand short version
+					String major = matcher.group(1), minor = matcher.group(2);
+
+					if (minor == null) {
+						minor = "0";
+					}
+
+					version = major + "." + minor + ".0-0";
+				}
+			}
 
 			if (comp.equals(">")) {
 				return greaterThan(version);
@@ -77,7 +95,7 @@ public class Ranges {
 			return new BaseRange(min, max, true, true);
 		}
 
-		return null;
+		return new RangeParser(range.trim()).parse();
 	}
 
 	public static BaseRange greaterThan(String version) {

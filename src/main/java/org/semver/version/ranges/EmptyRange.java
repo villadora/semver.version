@@ -56,4 +56,8 @@ class EmptyRange extends BaseRange {
 		return false;
 	}
 
+	@Override
+	public String toString() {
+		return "> 0.0.0 < 0.0.0";
+	}
 }
