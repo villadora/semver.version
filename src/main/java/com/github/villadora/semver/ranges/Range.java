@@ -16,9 +16,9 @@ public class Range {
 	protected Version min;
 	protected Version max;
 
-	public static Version MIN = new Version(-1, -1, -1, new String[] { "0" });
+	public final static Version MIN = new Version(-1, -1, -1, new String[] { "0" });
 
-	public static Version MAX = new Version(Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE);
+	public final static Version MAX = new Version(Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE);
 
 	protected Range() {
 		this(MAX, MIN);
@@ -202,8 +202,8 @@ public class Range {
 	@Override
 	public int hashCode() {
 		int result = 17;
-		for (int code : Arrays.asList(min.hashCode(), max.hashCode(), new Boolean(minClose).hashCode(), new Boolean(
-				maxClose).hashCode())) {
+		for (int code : Arrays.asList(min.hashCode(), max.hashCode(), Boolean.valueOf(minClose).hashCode(), Boolean
+				.valueOf(maxClose).hashCode())) {
 			result = 31 * result + code;
 		}
 		return result;

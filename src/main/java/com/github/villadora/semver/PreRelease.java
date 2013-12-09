@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.github.villadora.semver.regexp.VersionRegExps;
 
-public class PreRelease implements Comparable<PreRelease> {
+class PreRelease implements Comparable<PreRelease> {
 	private String[] prerelease;
 
 	public static boolean valid(String prerelease) {

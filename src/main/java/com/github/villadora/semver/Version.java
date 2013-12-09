@@ -86,7 +86,8 @@ public class Version implements Comparable<Version> {
 	}
 
 	public String[] getPrerelease() {
-		return prerelease.getPrerelease();
+		String[] pres = prerelease.getPrerelease();
+		return Arrays.copyOf(pres, pres.length);
 	}
 
 	public void setPrerelease(String[] prerelease) {
@@ -94,7 +95,8 @@ public class Version implements Comparable<Version> {
 	}
 
 	public String[] getBuild() {
-		return build.getBuild();
+		String[] bd = build.getBuild();
+		return Arrays.copyOf(bd, bd.length);
 	}
 
 	public void setBuild(String[] build) {

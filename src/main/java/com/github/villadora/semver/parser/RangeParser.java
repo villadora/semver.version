@@ -45,7 +45,6 @@ public class RangeParser {
 
 	private String input;
 	private int pos;
-	private int nested;
 
 	public static Range parse(String range) {
 		return new RangeParser(range).parse();
@@ -54,7 +53,6 @@ public class RangeParser {
 	public RangeParser(String input) {
 		this.input = input.trim();
 		this.pos = 0;
-		this.nested = 0;
 	}
 
 	public Range parse() {
@@ -75,7 +73,6 @@ public class RangeParser {
 		switch (ch) {
 		case '(':
 			pos += 1;
-			nested += 1;
 			range = range(true);
 			if (input.charAt(pos) != ')')
 				throw new IllegalArgumentException("Cannot find matching close paren: " + input);
