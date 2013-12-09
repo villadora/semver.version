@@ -12,8 +12,9 @@ public class CompositeRangeTest {
 
 	@Test
 	public void testAndRange() {
-		Range range = Range.valueOf(">1.0.0 <= 2.0");
-		assertThat(range, nullValue());
+		Range range = Range.valueOf(">1.0.0 <= 2.0.0");
 		assertThat(range, notNullValue());
+                assertThat(range.satisfies("1.0.1"), is(true));
+                assertThat(range.satisfies("2.0.0-alpha"), is(true));
 	}
 }
