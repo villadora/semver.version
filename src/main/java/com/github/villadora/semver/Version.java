@@ -47,6 +47,10 @@ public class Version implements Comparable<Version> {
 		this(version.getMajor(), version.getMinor(), version.getPatch(), version.getPrerelease(), version.getBuild());
 	}
 
+	public Version(int major, int minor, int patch, String prerelease, String build) {
+		this(major, minor, patch, new String[] { prerelease }, new String[] { build });
+	}
+
 	public Version(int major, int minor, int patch, String[] prerelease, String[] build) {
 		this.mainVersion = new MainVersion(major, minor, patch);
 		this.prerelease = new PreRelease(prerelease);
@@ -58,7 +62,7 @@ public class Version implements Comparable<Version> {
 	}
 
 	public Version(int major, int minor, int patch) {
-		this(major, minor, patch, null, null);
+		this(major, minor, patch, new String[] {}, new String[] {});
 	}
 
 	public int getMajor() {
@@ -85,19 +89,19 @@ public class Version implements Comparable<Version> {
 		this.mainVersion.setPatch(patch);
 	}
 
-	public String[] getPrerelease() {
-		return prerelease.getPrerelease();
+	public String getPrerelease() {
+		return prerelease.toString();
 	}
 
-	public void setPrerelease(String[] prerelease) {
+	public void setPrerelease(String... prerelease) {
 		this.prerelease.setPrerelease(prerelease);
 	}
 
-	public String[] getBuild() {
-		return build.getBuild();
+	public String getBuild() {
+		return build.toString();
 	}
 
-	public void setBuild(String[] build) {
+	public void setBuild(String... build) {
 		this.build.setBuild(build);
 	}
 

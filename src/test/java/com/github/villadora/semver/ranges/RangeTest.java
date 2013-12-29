@@ -16,6 +16,7 @@ public class RangeTest {
 		Range range = Range.valueOf("~ 1.0.2");
 
 		assertThat(range, notNullValue());
+		assertThat(range.satisfies("1.0.2-alpha"), is(true));
 		assertThat(range.satisfies("1.0.3"), is(true));
 		assertThat(range.satisfies("1.1.3"), is(false));
 	}

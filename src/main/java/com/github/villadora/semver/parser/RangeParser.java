@@ -5,6 +5,7 @@ import java.util.regex.Matcher;
 import com.github.villadora.semver.Version;
 import com.github.villadora.semver.ranges.Range;
 import com.github.villadora.semver.regexp.RangeRegExps;
+import com.github.villadora.semver.regexp.VersionRegExps;
 
 /**
  * 
@@ -251,8 +252,12 @@ public class RangeParser {
 	}
 
 	private String precise(String version, boolean prerelease) {
-		if (RangeRegExps.EXACT_VERSION_REG.matcher(version).matches())
-			return version;
+		if (RangeRegExps.EXACT_VERSION_REG.matcher(version).matches()) {
+			if (prerelease && VersionRegExps.MAIN_VERSION_REG.matcher(version).matches())
+				return version + "-0";
+			else
+				return version;
+		}
 
 		String[] v = version.split("\\.");
 		if (v.length == 3) {

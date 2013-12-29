@@ -1,13 +1,20 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.github.villadora.semver</groupId>
+	
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>7</version>
+	</parent>
+
+	<groupId>com.github.villadora</groupId>
 	<artifactId>semver</artifactId>
 	<packaging>jar</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 
 	<name>Semantic Versioning</name>
-	<url>http://maven.apache.org</url>
+	<url>http://github.com/villadora/semver.version</url>
 
 
 	<developers>
@@ -17,6 +24,25 @@
 			<url>https://github.com/villadora</url>
 		</developer>
 	</developers>
+
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+
+
+	<scm>
+		<connection>scm:git:git@github.com:villadora/semver.version.git
+    </connection>
+		<developerConnection>scm:git:git@github.com:villadora/semver.version.git
+    </developerConnection>
+		<url>scm:git:git@github.com:villadora/semver.version.git</url>
+		<tag>HEAD</tag>
+	</scm>
+
+
 
 	<properties>
 		<!-- Encoding UTF-8 -->
@@ -114,6 +140,19 @@
 				<configuration>
 					<updateReleaseInfo>true</updateReleaseInfo>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
