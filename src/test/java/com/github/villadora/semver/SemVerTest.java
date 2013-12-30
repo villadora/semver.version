@@ -4,6 +4,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.junit.Test;
 import org.junit.internal.runners.JUnit4ClassRunner;
@@ -80,8 +81,8 @@ public class SemVerTest {
 				.put("<=0.7   ", "0.7.2").put("<1.2.3", "1.2.3-beta").put("=1.2.3", "1.2.3-beta").put(">1.2", "1.2.8")
 				.build();
 
-		for (String range : values.keySet()) {
-			String version = values.get(range);
+		for (Entry<String, String> entry : values.entrySet()) {
+			String range = entry.getKey(), version = entry.getValue();
 
 			if (!SemVer.rangeValid(range))
 				System.out.println(range);
@@ -123,8 +124,9 @@ public class SemVerTest {
 				.put("1.2.3 >= 1.2.1", "1.2.3").put(">=1.2.3 >=1.2.1", "1.2.3").put(">=1.2.1 >=1.2.3  ", "1.2.3")
 				.put("<=1.2.3", "1.2.3-beta").put(">1.2 ", "1.3.0-beta").put(">=1.2  ", "1.2.8").build();
 
-		for (String range : values.keySet()) {
-			String version = values.get(range);
+		for (Entry<String, String> entry : values.entrySet()) {
+			String range = entry.getKey();
+			String version = entry.getValue();
 
 			if (!SemVer.rangeValid(range))
 				System.out.println(range);
@@ -145,8 +147,8 @@ public class SemVerTest {
 				.put(".0.0", false).put("1.1", false).put("1.x1.0", false).put("1.13.0", true).put("1..3", false)
 				.put("v1.3.0", true).put("= 1.3.0", true).put("=1.0.0", true).put(" = 1.0.0", true).build();
 
-		for (String version : values.keySet()) {
-			assertThat("Version valid: " + version, SemVer.valid(version), is(values.get(version)));
+		for (Entry<String, Boolean> entry : values.entrySet()) {
+			assertThat("Version valid: " + entry.getKey(), SemVer.valid(entry.getKey()), is(entry.getValue()));
 		}
 	}
 
@@ -163,8 +165,9 @@ public class SemVerTest {
 				.put("v1.2.3-a.b", "1.2.3-a.5").put("1.2.3-a.b", "1.2.3-a")
 				.put("1.2.3-a.b.c.10.d.5", "1.2.3-a.b.c.5.d.100").build();
 
-		for (String verA : values.keySet()) {
-			String verB = values.get(verA);
+		for (Entry<String, String> entry : values.entrySet()) {
+			String verA = entry.getKey();
+			String verB = entry.getValue();
 
 			assertThat("gt(" + verA + " , " + verB + ")", SemVer.gt(verA, verB), is(true));
 			assertThat("lt(" + verB + " , " + verA + ")", SemVer.lt(verB, verA), is(true));
@@ -215,9 +218,10 @@ public class SemVerTest {
 				.put(new String[] { "  v1.2.3+build", "1.2.3+otherbuild" }, true)
 				.put(new String[] { "1.3.0", " = 1.3.0" }, true).build();
 
-		for (String[] versions : values.keySet()) {
+		for (Entry<String[], Boolean> entry : values.entrySet()) {
+			String[] versions = entry.getKey();
 			String verA = versions[0], verB = versions[1];
-			boolean result = values.get(versions);
+			boolean result = entry.getValue();
 
 			assertThat("eq(" + verA + " , " + verB + ")", SemVer.eq(verA, verB), is(result));
 			assertThat("neq(" + verA + " , " + verB + ")", SemVer.neq(verA, verB), is(!result));

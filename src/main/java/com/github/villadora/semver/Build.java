@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.github.villadora.semver.regexp.VersionRegExps;
 
-public class Build {
+class Build {
 	private String[] build;
 
 	public static boolean valid(String build) {

@@ -23,7 +23,7 @@ public class BuildTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testWrongArgument() {
-		Build build = new Build("build323+34-234.3");
+		new Build("build323+34-234.3");
 		Assert.fail();
 	}
 
