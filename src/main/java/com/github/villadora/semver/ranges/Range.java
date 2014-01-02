@@ -69,6 +69,9 @@ public class Range {
 	 * @return
 	 */
 	public Version maxSatisfying(List<Version> versions) {
+		if (versions == null || versions.size() == 0)
+			return null;
+
 		List<Version> list = new LinkedList<Version>(versions);
 		Collections.sort(list);
 		for (int i = list.size() - 1; i >= 0; --i) {

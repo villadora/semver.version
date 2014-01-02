@@ -1,11 +1,15 @@
 package com.github.villadora.semver;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.regex.Matcher;
 
 import com.github.villadora.semver.regexp.VersionRegExps;
 
-class MainVersion implements Comparable<MainVersion> {
+class MainVersion implements Comparable<MainVersion>, Serializable {
+
+	private static final long serialVersionUID = 161760463033091502L;
+
 	private int major;
 	private int minor;
 	private int patch;

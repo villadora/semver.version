@@ -1,12 +1,15 @@
 package com.github.villadora.semver;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
 import com.github.villadora.semver.regexp.VersionRegExps;
 
-class Build {
+class Build implements Serializable {
+	private static final long serialVersionUID = 4639504973400479946L;
+
 	private String[] build;
 
 	public static boolean valid(String build) {

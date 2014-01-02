@@ -1,12 +1,15 @@
 package com.github.villadora.semver;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
 import com.github.villadora.semver.regexp.VersionRegExps;
 
-class PreRelease implements Comparable<PreRelease> {
+class PreRelease implements Comparable<PreRelease>, Serializable {
+	private static final long serialVersionUID = 8495065215362333955L;
+
 	private String[] prerelease;
 
 	public static boolean valid(String prerelease) {
