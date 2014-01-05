@@ -25,6 +25,12 @@ public class Version implements Comparable<Version>, Serializable {
 		return VersionRegExps.FULL_REG.matcher(version).matches();
 	}
 
+        public static Version valueOf(String version) {
+                if(version == null)
+                        return null;
+                return new Version(version);
+        }
+
 	public Version() {
 		this.mainVersion = new MainVersion();
 		this.prerelease = new PreRelease();
