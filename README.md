@@ -2,9 +2,9 @@ SemVer java
 ==============
 
 
-[![Build Status](https://travis-ci.org/zafarkhaja/java-semver.png)](https://travis-ci.org/zafarkhaja/java-semver)
+[![Build Status](https://travis-ci.org/villadora/semver.version.png)](https://travis-ci.org/villadora/semver.version)
 
-Semver Version Implementation in Java (Yet Another)
+Semver Version Implementation in Java, support near all version/range expressions.
 
 ## Installation
 
