@@ -116,16 +116,21 @@ public class Version implements Comparable<Version>, Serializable {
 
 	public Version incrMajor() {
 		this.mainVersion.incrMajor();
+                this.mainVersion.setPatch(0);
+                this.prerelease.setPrerelease(null);
 		return this;
 	}
 
 	public Version incrMinor() {
 		this.mainVersion.incrMinor();
+                this.mainVersion.setPatch(0);
+                this.prerelease.setPrerelease(null);
 		return this;
 	}
 
 	public Version incrPatch() {
 		this.mainVersion.incrPatch();
+                this.prerelease.setPrerelease(null);
 		return this;
 	}
 

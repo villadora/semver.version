@@ -39,6 +39,10 @@ public class SemVerTest {
 				"2.0.0", "2.1.0");
 		assertThat(version.toString(), equalTo("2.0.0"));
 
+                range = SemVer.range("~1.2.3");
+                version = range.maxSatisfying("1.2.3", "1.2.4", "1.3.1", "2.1.0");
+                assertThat(version.toString(), equalTo("1.2.4"));
+
 		range = SemVer.range("1.2");
 		version = range.maxSatisfying("1.2.3", "1.2.4");
 		assertThat(version.toString(), equalTo("1.2.4"));

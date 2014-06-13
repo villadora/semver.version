@@ -88,6 +88,7 @@ public class RangeParser {
 			// compare
 			range = compare();
 			break;
+                case '^': // TODO: support caret, which lock down the first no-zero number
 		default:
 			// TODO: replace regexps with parser
 			Matcher mc = RangeRegExps.HYPHEN_RANGE_REG.matcher(input.substring(pos));
@@ -230,9 +231,15 @@ public class RangeParser {
 
 			Version version = new Version(precise(impv, true));
 			if (v.length == 1) {
-				return Range.between(version, new Version(version).incrMajor(), true, false);
+                                Version upper = new Version(version);
+                                upper.setMajor(upper.getMajor() + 1);
+                                upper.setPatch(0);
+				return Range.between(version, upper, true, false);
 			} else if (v.length <= 3) {
-				return Range.between(version, new Version(version).incrMinor(), true, false);
+                                Version upper = new Version(version);
+                                upper.setMinor(upper.getMinor() + 1);
+                                upper.setPatch(0);
+				return Range.between(version, upper, true, false);
 			}
 		}
 

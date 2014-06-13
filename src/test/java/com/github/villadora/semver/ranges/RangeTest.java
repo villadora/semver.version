@@ -17,8 +17,13 @@ public class RangeTest {
 
 		assertThat(range, notNullValue());
 		assertThat(range.satisfies("1.0.2-alpha"), is(true));
+		assertThat(range.satisfies("1.0.3+build"), is(true));
 		assertThat(range.satisfies("1.0.3"), is(true));
+		assertThat(range.satisfies("1.1.1"), is(false));
 		assertThat(range.satisfies("1.1.3"), is(false));
+		assertThat(range.satisfies("1.2.1"), is(false));
+		assertThat(range.satisfies("1.1.0-0"), is(false));
+		assertThat(range.satisfies("2.0.1"), is(false));
 	}
 
 	@Test
