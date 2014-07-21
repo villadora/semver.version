@@ -16,7 +16,6 @@ public class Version implements Comparable<Version>, Serializable {
 
     private Build build;
 
-    private String version;
 
     public static boolean valid(String version) {
         if (version == null)
@@ -43,7 +42,6 @@ public class Version implements Comparable<Version>, Serializable {
 
         Matcher mc = VersionRegExps.FULL_REG.matcher(version);
         if (mc.matches()) {
-            this.version = version;
             this.mainVersion = new MainVersion(Integer.parseInt(mc.group(1)), Integer.parseInt(mc.group(2)),
                     Integer.parseInt(mc.group(3)));
             this.prerelease = new PreRelease(mc.group(4));
@@ -136,9 +134,6 @@ public class Version implements Comparable<Version>, Serializable {
 
     @Override
     public String toString() {
-        if (this.version != null)
-            return this.version;
-
         StringBuilder vb = new StringBuilder(mainVersion.toString());
         if (prerelease.getPrerelease().length > 0) {
             vb.append("-");
