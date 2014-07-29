@@ -10,7 +10,7 @@
   <groupId>com.github.villadora</groupId>
   <artifactId>semver</artifactId>
   <packaging>jar</packaging>
-  <version>0.0.3</version>
+  <version>0.0.4</version>
 
   <name>Semantic Versioning</name>
   <url>http://github.com/villadora/semver.version</url>

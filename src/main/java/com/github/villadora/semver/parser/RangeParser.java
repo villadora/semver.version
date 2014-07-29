@@ -270,12 +270,7 @@ public class RangeParser {
                 return Range.between(version, upper, true, false);
             }
 
-            // lock down minor
-            if (version.getMinor() != 0) {
-                Version upper = new Version(0, version.getMinor() + 1, 0, new String[] { "0" });
-                return Range.between(version, upper, true, false);
-            }
-
+            // if leading major is 0, than just lock the version
             return Range.exact(version);
         }
 
