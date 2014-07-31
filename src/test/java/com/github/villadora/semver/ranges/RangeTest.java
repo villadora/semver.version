@@ -24,8 +24,9 @@ public class RangeTest {
         range = Range.valueOf("^0.1.2");
 
         assertThat(range, notNullValue());
-        assertThat(range.satisfies("0.1.2-a"), is(true));
-        assertThat(range.satisfies("0.1.3"), is(true));
+        assertThat(range.satisfies("0.1.2"), is(true));
+        assertThat(range.satisfies("0.1.2-a"), is(false));
+        assertThat(range.satisfies("0.1.3"), is(false));
         assertThat(range.satisfies("0.3.3"), is(false));
     }
 

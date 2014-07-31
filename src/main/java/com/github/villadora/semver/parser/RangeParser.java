@@ -271,7 +271,7 @@ public class RangeParser {
             }
 
             // if leading major is 0, than just lock the version
-            return Range.exact(version);
+            return Range.exact(new Version(precise(impv)));
         }
 
         throw new IllegalArgumentException("Invalid caret range: " + input.substring(pos));
